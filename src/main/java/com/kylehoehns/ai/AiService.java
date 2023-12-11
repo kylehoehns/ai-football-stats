@@ -35,7 +35,6 @@ public class AiService {
     var systemPrompt = buildSystemPromptFromTemplate(similarDocuments);
     var userMessage = new UserMessage(message);
     var prompt = new Prompt(List.of(systemPrompt, userMessage));
-    log.info("Prompt sent to AI model: \n{}", prompt);
     return aiClient.generate(prompt).getGeneration();
   }
 

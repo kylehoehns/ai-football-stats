@@ -12,7 +12,7 @@ This is a Spring Boot web application that uses [Spring AI](https://docs.spring.
 
 ## Populating Vector Storage
 * Once the application is running, you can populate the vector storage by running `curl -X POST http://localhost:8080/ai/create-embeddings`.
-* This will create embeddings for all the data in `src/main/resources/data` and store them in the vector storage file called `iowa-football-vector-storage`.
+* This will create embeddings for all the data in `src/main/resources/data` and store them in the vector storage file called `iowa-football-vector-storage.json` in your project's `target/classes/data` directory, so you only have to generate them once.
 
 ## Using the API
 * Once the vector storage is populated, you can use the API to get predictions from GPT-3.5 using the embeddings in the vector storage.

@@ -38,7 +38,7 @@ public class VectorStoreService {
   @Value("classpath:/data/iowa-team-total-offense.md")
   private Resource totalOffenseResource;
 
-  @Value("classpath:/data/iowa-football-vector-store")
+  @Value("classpath:/data/iowa-football-vector-store.json")
   private Resource iowaFootballVectorStoreResource;
 
   private final SimplePersistentVectorStore vectorStore;
@@ -75,7 +75,8 @@ public class VectorStoreService {
     log.info("Loading Embeddings...");
     vectorStore.load(iowaFootballVectorStoreResource.getFile());
     var documents = new VectorStoreRetriever(vectorStore).retrieve(message);
-    log.info("Found {} similar documents", documents.size());
+    var fileNames = documents.stream().map(d -> d.getMetadata().get("source")).toList();
+    log.info("Found {} similar documents from {}", documents.size(), fileNames);
     return documents;
   }
 
