@@ -40,7 +40,7 @@ public class AiService {
 
   private Message buildSystemPromptFromTemplate(List<Document> similarDocuments) {
     String documents = similarDocuments.stream().map(Document::getContent).collect(Collectors.joining("\n"));
-    SystemPromptTemplate promptTemplate = new SystemPromptTemplate(prompt);
+    var promptTemplate = new SystemPromptTemplate(prompt);
     return promptTemplate.createMessage(Map.of("documents", documents));
   }
 }

@@ -2,9 +2,12 @@ package com.kylehoehns.ai;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.client.Generation;
+import org.springframework.ai.document.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @Slf4j
@@ -28,7 +31,8 @@ public class AiController {
 
   @PostMapping("/ai")
   public Generation rag(@RequestBody InputPrompt inputPrompt) throws Exception {
-    return aiService.generate(inputPrompt.message(), vectorStoreService.getSimilarDocuments(inputPrompt.message()));
+    var similarDocuments = vectorStoreService.getSimilarDocuments(inputPrompt.message());
+    return aiService.generate(inputPrompt.message(), similarDocuments);
   }
 
 }
