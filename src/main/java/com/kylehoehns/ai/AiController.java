@@ -35,4 +35,6 @@ public class AiController {
     return aiService.generate(inputPrompt.message(), similarDocuments);
   }
 
+  public record InputPrompt(String message) {}
+
 }
