@@ -20,7 +20,7 @@ This is a Spring Boot web application that uses [Spring AI](https://docs.spring.
 
 ```shell
 curl --request POST \
-  --url 'http://localhost:8080/ai?message=how%20many%20minutes%20of%20posession%20' \
+  --url 'http://localhost:8080/ai' \
   --header 'Content-Type: application/json' \
   --data '{
 	"message": "How many passing touchdowns were there?"
