@@ -1,6 +1,6 @@
 # Spring AI Example
 
-This is a Spring Boot web application that uses [Spring AI](https://docs.spring.io/spring-ai/reference/) to talk with OpenAi's GPT-3.5 model. It utilizes [retrieval augmented generation](https://ai.meta.com/blog/retrieval-augmented-generation-streamlining-the-creation-of-intelligent-natural-language-processing-models/) to answer questions about the Iowa Hawkeyes football team for the 2023-24 season.
+This is a Spring Boot web application that uses [Spring AI](https://docs.spring.io/spring-ai/reference/) to talk with OpenAi's GPT-3.5 model. It utilizes [retrieval augmented generation](https://ai.meta.com/blog/retrieval-augmented-generation-streamlining-the-creation-of-intelligent-natural-language-processing-models/) to answer questions about the [Iowa Hawkeyes football team for the 2023-24 season](https://hawkeyesports.com/sports/football/cumestats/season/2023-24/).
 
 ## Setup
 
@@ -8,7 +8,7 @@ This is a Spring Boot web application that uses [Spring AI](https://docs.spring.
 * Set up [billing settings](https://platform.openai.com/account/billing/overview) for your account with a small spending limit. 
 * Set an environment variable named `SPRING_AI_OPENAI_API_KEY` to your OpenAI API key.
 * Install Java 21 or later.
-* Run `./mvnw spring-boot:run` to start the application.
+* Run `./gradlew bootRun` to start the application.
 
 ## Populating Vector Storage
 * Once the application is running, you can populate the vector storage by running `curl -X POST http://localhost:8080/ai/create-embeddings`.
