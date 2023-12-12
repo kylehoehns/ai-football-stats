@@ -7,58 +7,36 @@ import org.springframework.ai.retriever.VectorStoreRetriever;
 import org.springframework.ai.vectorstore.SimplePersistentVectorStore;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.core.io.support.ResourcePatternUtils;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
 public class VectorStoreService {
 
-  @Value("classpath:/data/iowa-team-first-downs.md")
-  private Resource firstDownsResource;
-
-  @Value("classpath:/data/iowa-team-kicking.md")
-  private Resource kickingResource;
-
-  @Value("classpath:/data/iowa-team-misc.md")
-  private Resource miscResource;
-
-  @Value("classpath:/data/iowa-team-passing.md")
-  private Resource passingResource;
-
-  @Value("classpath:/data/iowa-team-rushing.md")
-  private Resource rushingResource;
-
-  @Value("classpath:/data/iowa-team-scoring.md")
-  private Resource scoringResource;
-
-  @Value("classpath:/data/iowa-team-total-offense.md")
-  private Resource totalOffenseResource;
-
-  @Value("classpath:/data/iowa-football-vector-store.json")
+  @Value("classpath:/vector-store/iowa-football-vector-store.json")
   private Resource iowaFootballVectorStoreResource;
 
   private final SimplePersistentVectorStore vectorStore;
+  private final ResourceLoader resourceLoader;
 
-  public VectorStoreService(SimplePersistentVectorStore vectorStore) {
+  public VectorStoreService(SimplePersistentVectorStore vectorStore, ResourceLoader resourceLoader) {
     this.vectorStore = vectorStore;
+    this.resourceLoader = resourceLoader;
   }
 
   void populateVectorStoreWithEmbeddings() throws IOException {
     log.info("Loading Documents...");
-    var resources = List.of(
-      firstDownsResource,
-      kickingResource,
-      miscResource,
-      passingResource,
-      rushingResource,
-      scoringResource,
-      totalOffenseResource
-    );
+
+    var resources = ResourcePatternUtils
+        .getResourcePatternResolver(resourceLoader)
+        .getResources("classpath:/data/*.md");
+
     List<Document> documents = new ArrayList<>();
     for (var resource : resources) {
       var textReader = new TextReader(resource);
