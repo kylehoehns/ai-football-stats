@@ -1,5 +1,6 @@
-package com.kylehoehns.ai;
+package com.kylehoehns.ai.rag;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.reader.TextReader;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
+@RequiredArgsConstructor
 @Service
 public class VectorStoreService {
 
@@ -25,10 +27,6 @@ public class VectorStoreService {
   private final SimplePersistentVectorStore vectorStore;
   private final ResourceLoader resourceLoader;
 
-  public VectorStoreService(SimplePersistentVectorStore vectorStore, ResourceLoader resourceLoader) {
-    this.vectorStore = vectorStore;
-    this.resourceLoader = resourceLoader;
-  }
 
   void populateVectorStoreWithEmbeddings() throws IOException {
     log.info("Loading Documents...");

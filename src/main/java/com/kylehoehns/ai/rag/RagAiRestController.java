@@ -1,27 +1,22 @@
-package com.kylehoehns.ai;
+package com.kylehoehns.ai.rag;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.client.Generation;
-import org.springframework.ai.document.Document;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 
 @Slf4j
+@RequiredArgsConstructor
 @RestController
-public class AiController {
+public class RagAiRestController {
 
   private final VectorStoreService vectorStoreService;
   private final AiService aiService;
-
-  @Autowired
-  public AiController(AiService aiService, VectorStoreService vectorStoreService) {
-    this.aiService = aiService;
-    this.vectorStoreService = vectorStoreService;
-  }
 
   @PostMapping("/ai/create-embeddings")
   @ResponseStatus(HttpStatus.CREATED)

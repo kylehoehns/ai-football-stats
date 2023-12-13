@@ -1,6 +1,6 @@
-package com.kylehoehns.ai;
+package com.kylehoehns.ai.rag;
 
-import lombok.SneakyThrows;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.client.AiClient;
 import org.springframework.ai.client.Generation;
@@ -18,17 +18,14 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Slf4j
+@RequiredArgsConstructor
 @Service
 public class AiService {
 
-  @Value("classpath:/prompts/prompt.st")
+  @Value("classpath:/prompts/rag-prompt.st")
   private Resource prompt;
 
   private final AiClient aiClient;
-
-  public AiService(AiClient aiClient) {
-    this.aiClient = aiClient;
-  }
 
   Generation generate(String message, List<Document> similarDocuments) {
     log.info("Asking AI model to reply to question...");
