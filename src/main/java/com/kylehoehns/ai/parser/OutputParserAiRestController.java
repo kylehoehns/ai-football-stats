@@ -2,7 +2,7 @@ package com.kylehoehns.ai.parser;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.ai.client.AiClient;
+import org.springframework.ai.chat.ChatClient;
 import org.springframework.ai.parser.BeanOutputParser;
 import org.springframework.ai.prompt.PromptTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +19,7 @@ import java.util.Map;
 @RequestMapping("/ai/parser")
 public class OutputParserAiRestController {
 
-  private final AiClient aiClient;
+  private final ChatClient chatClient;
 
   @GetMapping
   public TeamRecord getWinLossRecord(@RequestParam(value = "team") String team) {
@@ -28,15 +28,16 @@ public class OutputParserAiRestController {
 
     var message =
         """
-        Provide the last five years of win-loss records for the {team} college football team.
+        You are an expert college football analyst.
+        Provide the last three years of win-loss records for the {team} college football team.
         {format}
         """;
 
     var promptTemplate = new PromptTemplate(message, Map.of("team", team, "format", outputParser.getFormat()));
     var prompt = promptTemplate.create();
-    var generation = aiClient.generate(prompt).getGeneration();
+    var generation = chatClient.generate(prompt).getGeneration();
 
-    return outputParser.parse(generation.getText());
+    return outputParser.parse(generation.getContent());
   }
 
   public record TeamRecord(String team, List<SeasonRecord> seasonRecords) {}

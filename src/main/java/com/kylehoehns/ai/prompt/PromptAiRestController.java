@@ -1,8 +1,7 @@
 package com.kylehoehns.ai.prompt;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.ai.client.AiClient;
-import org.springframework.ai.client.AiResponse;
+import org.springframework.ai.chat.ChatClient;
 import org.springframework.ai.prompt.Prompt;
 import org.springframework.ai.prompt.SystemPromptTemplate;
 import org.springframework.ai.prompt.messages.SystemMessage;
@@ -28,23 +27,23 @@ public class PromptAiRestController {
   private static final String SYSTEM_MESSAGE
       = "Respond to the provided question as an American football color commentator.";
 
-  private final AiClient aiClient;
+  private final ChatClient chatClient;
 
   @GetMapping
-  public AiResponse getFootballFact(@RequestParam(value = "question", defaultValue = DEFAULT_QUESTION) String question) {
+  public String getFootballFact(@RequestParam(value = "question", defaultValue = DEFAULT_QUESTION) String question) {
 
     var systemMessage = new SystemMessage(SYSTEM_MESSAGE);
     var userMessage = new UserMessage(question);
     var prompt = new Prompt(List.of(systemMessage, userMessage));
 
-    return aiClient.generate(prompt);
+    return chatClient.generate(prompt).getGeneration().getContent();
   }
 
   @Value("classpath:/prompts/prompt.st")
   private Resource template;
 
   @GetMapping("/template")
-  public AiResponse getFootballFactWithTemplate(
+  public String getFootballFactWithTemplate(
       @RequestParam(value = "question", defaultValue = DEFAULT_QUESTION) String question,
       @RequestParam(value = "team", defaultValue = "Iowa") String team) {
 
@@ -53,6 +52,6 @@ public class PromptAiRestController {
     var userMessage = new UserMessage(question);
     var prompt = new Prompt(List.of(systemMessage, userMessage));
 
-    return aiClient.generate(prompt);
+    return chatClient.generate(prompt).getGeneration().getContent();
   }
 }
