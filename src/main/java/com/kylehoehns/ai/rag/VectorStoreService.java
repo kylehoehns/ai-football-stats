@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.reader.TextReader;
 import org.springframework.ai.retriever.VectorStoreRetriever;
-import org.springframework.ai.vectorstore.SimplePersistentVectorStore;
+import org.springframework.ai.vectorstore.SimpleVectorStore;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
@@ -24,7 +24,7 @@ public class VectorStoreService {
   @Value("classpath:/vector-store/iowa-football-vector-store.json")
   private Resource iowaFootballVectorStoreResource;
 
-  private final SimplePersistentVectorStore vectorStore;
+  private final SimpleVectorStore vectorStore;
   private final ResourceLoader resourceLoader;
 
 

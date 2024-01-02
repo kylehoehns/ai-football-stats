@@ -1,7 +1,7 @@
 package com.kylehoehns.ai;
 
 import org.springframework.ai.embedding.EmbeddingClient;
-import org.springframework.ai.vectorstore.SimplePersistentVectorStore;
+import org.springframework.ai.vectorstore.SimpleVectorStore;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -14,8 +14,8 @@ public class Application {
     }
 
     @Bean
-    SimplePersistentVectorStore vectorStore(EmbeddingClient embeddingClient) {
-        return new SimplePersistentVectorStore(embeddingClient);
+    SimpleVectorStore vectorStore(EmbeddingClient embeddingClient) {
+        return new SimpleVectorStore(embeddingClient);
     }
 
 }

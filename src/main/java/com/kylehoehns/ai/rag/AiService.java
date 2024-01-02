@@ -2,8 +2,8 @@ package com.kylehoehns.ai.rag;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.ai.client.AiClient;
-import org.springframework.ai.client.Generation;
+import org.springframework.ai.chat.ChatClient;
+import org.springframework.ai.chat.Generation;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.prompt.Prompt;
 import org.springframework.ai.prompt.SystemPromptTemplate;
@@ -25,14 +25,14 @@ public class AiService {
   @Value("classpath:/prompts/rag-prompt.st")
   private Resource prompt;
 
-  private final AiClient aiClient;
+  private final ChatClient chatClient;
 
   Generation generate(String message, List<Document> similarDocuments) {
     log.info("Asking AI model to reply to question...");
     var systemPrompt = buildSystemPromptFromTemplate(similarDocuments);
     var userMessage = new UserMessage(message);
     var prompt = new Prompt(List.of(systemPrompt, userMessage));
-    return aiClient.generate(prompt).getGeneration();
+    return chatClient.generate(prompt).getGeneration();
   }
 
   private Message buildSystemPromptFromTemplate(List<Document> similarDocuments) {
